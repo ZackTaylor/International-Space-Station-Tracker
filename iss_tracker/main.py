@@ -5,6 +5,8 @@ import turtle
 
 ASTRONAUTS_URL = 'http://api.open-notify.org/astros.json'
 LOCATION_URL = 'http://api.open-notify.org/iss-now.json'
+BACKGROUND_PATH = 'images/map.gif'
+ISS_PATH = 'images/iss.gif'
 
 
 def api_data(url):
@@ -45,14 +47,24 @@ def craft_location():
     return [lat, lon]
 
 
-def draw_map():
+def draw_iss(screen, image):
+    """Draw iss thumbnail to the given screen."""
+    screen.register_shape(image)
+    iss = turtle.Turtle()
+    iss.shape(image)
+    iss.setheading(90)
+
+
+def draw_map(background):
     """Draw map gif in new window."""
-    screen = turtle.Screen()
-    screen.setup(720, 360)
-    screen.setworldcoordinates(-180, -90, 180, 90)
-    screen.bgpic('images/map.gif')
+    world = turtle.Screen()
+    world.setup(720, 360)
+    world.setworldcoordinates(-180, -90, 180, 90)
+    world.bgpic(background)
+
+    draw_iss(world, ISS_PATH)
 
 
 # TEST CODE
-draw_map()
+draw_map(BACKGROUND_PATH)
 turtle.done()
