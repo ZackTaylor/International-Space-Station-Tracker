@@ -1,6 +1,7 @@
 """ISS tracker."""
 import json
 import urllib.request
+import turtle
 
 ASTRONAUTS_URL = 'http://api.open-notify.org/astros.json'
 LOCATION_URL = 'http://api.open-notify.org/iss-now.json'
@@ -44,5 +45,14 @@ def craft_location():
     return [lat, lon]
 
 
+def draw_map():
+    """Draw map gif in new window."""
+    screen = turtle.Screen()
+    screen.setup(720, 360)
+    screen.setworldcoordinates(-180, -90, 180, 90)
+    screen.bgpic('images/map.gif')
+
+
 # TEST CODE
-print(craft_location())
+draw_map()
+turtle.done()
