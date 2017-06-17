@@ -3,10 +3,10 @@ import json
 import urllib.request
 
 ASTRONAUTS_URL = 'http://api.open-notify.org/astros.json'
-POSITION_URL = 'http://api.open-notify.org/iss-now.json'
+LOCATION_URL = 'http://api.open-notify.org/iss-now.json'
 
 
-def get_api_data(url):
+def api_data(url):
     """Get the JSON data from the specified NASA API."""
     url = url
     response = urllib.request.urlopen(url)
@@ -20,16 +20,29 @@ def get_api_data(url):
         return "Something went wrong."
 
 
-def display_craft_stats():
+def display_craft_passengers():
     """Show number of astronauts and name of astronauts."""
-    astros_data = get_api_data(ASTRONAUTS_URL)
+    astros_data = api_data(ASTRONAUTS_URL)
     number_astronauts = astros_data['number']
     message = "There are " + str(number_astronauts) + " astronauts in space: \n"
+    # Save all astronauts plus a new line in a list
     iss_passengers = [astronaut['name'] + "\n" for astronaut in astros_data['people']]
+
     for person in iss_passengers:
         message += person
-    print(message)
+
+    return(message)
+
+
+def craft_location():
+    """Pull craft location sats from NASA API. Return latitude and longitude."""
+    craft_data = api_data(LOCATION_URL)
+    location = craft_data['iss_position']
+    lat = location['latitude']
+    lon = location['longitude']
+
+    return [lat, lon]
 
 
 # TEST CODE
-display_craft_stats()
+print(craft_location())
