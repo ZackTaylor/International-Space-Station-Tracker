@@ -20,8 +20,16 @@ def get_api_data(url):
         return "Something went wrong."
 
 
+def display_craft_stats():
+    """Show number of astronauts and name of astronauts."""
+    astros_data = get_api_data(ASTRONAUTS_URL)
+    number_astronauts = astros_data['number']
+    message = "There are " + str(number_astronauts) + " astronauts in space: \n"
+    iss_passengers = [astronaut['name'] + "\n" for astronaut in astros_data['people']]
+    for person in iss_passengers:
+        message += person
+    print(message)
+
+
 # TEST CODE
-astros_data = get_api_data(ASTRONAUTS_URL)
-number_astronauts = astros_data['number']
-iss_passengers = [p['name'] for p in astros_data['people']]
-print(iss_passengers)
+display_craft_stats()
